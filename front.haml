@@ -18,6 +18,20 @@
         - if cfg[:stream_direct]
           %a{href: cfg[:stream_playlist]} Stream
       %hr
-      #queue= queue
+      - if current
+        Currently playing:
+        %div{style: 'font-size: 200%;'}
+          %table{width: '100%'}
+            %tr
+              %td= current.artist
+              %td= current.album
+              %td= current.title
+              %td.pull-right= time_to_str(current.time)
+        %hr
+      - if queue
+        Queue:
+        #queue= queue
+      - else
+        Nothing here.
       %hr
       %small Powered by MPDQueue &copy; Copyright Piotr S. Staszewski.

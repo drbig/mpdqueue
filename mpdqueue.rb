@@ -26,8 +26,19 @@ class MPDQueue < Sinatra::Base
   end
 
   helpers do
+    def mpd
+      settings.mpd
+    end
+
+    def current
+      return nil unless mpd.playing?
+      mpd.current_song
+    end
+
     def queue
-      haml :queue, partial: true, locals: {queue: settings.mpd.queue}
+      queue = mpd.queue
+      return nil unless queue && queue.any?
+      haml :queue, partial: true, locals: {queue: mpd.queue}
     end
 
     def time_to_str(sec)
@@ -40,7 +51,7 @@ class MPDQueue < Sinatra::Base
   end
 
   get '/' do
-    haml :front, locals: {cfg: settings.config, queue: queue}
+    haml :front, locals: {cfg: settings.config, current: current, queue: queue}
   end
 end
 
