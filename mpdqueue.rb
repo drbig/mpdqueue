@@ -10,6 +10,11 @@ require 'sinatra/rocketio'
 require 'tilt/haml'
 require 'ruby-mpd'
 
+# fix Sinatra logging retardation
+class String
+  def join(*_); self; end
+end
+
 STDOUT.sync = STDERR.sync = true
 
 if ARGV.length != 1
@@ -32,11 +37,13 @@ class MPDQueue < Sinatra::Base
     enable :dump_errors
     enable :raise_errors
 
+    set :bind, $config[:host]
+    set :port, $config[:port]
     set :root, File.dirname(__FILE__)
     set :views, File.join(settings.root, 'views')
     set :public_dir, File.join(settings.root, 'public')
     set :haml, ugly: true
-    set :cometio, timeout: 120, post_interval: 2, allow_crossdomain: false
+    set :cometio, timeout: 120, post_interval: 2, allow_crossdomain: true
     set :websocketio, port: $config[:io_port]
     set :rocketio, websocket: true, comet: true
   end
@@ -85,4 +92,4 @@ class MPDQueue < Sinatra::Base
   set :mpd, mpd
 end
 
-MPDQueue.run!($config)
+MPDQueue.run!
