@@ -38,7 +38,7 @@ class MPDQueue < Sinatra::Base
     def queue
       queue = mpd.queue
       return nil unless queue && queue.any?
-      haml :queue, partial: true, locals: {queue: mpd.queue}
+      haml :queue, partial: true, locals: {current: current, queue: mpd.queue}
     end
 
     def time_to_str(sec)
