@@ -62,7 +62,8 @@ class MPDQueue < Sinatra::Base
 
   get '/ajax/current' do
     song = mpd.playing? ? mpd.current_song : nil
-    haml :current, partial: true, locals: {song: song}
+    mode = mpd.random? ? :random : :normal
+    haml :current, partial: true, locals: {song: song, mode: mode}
   end
 
   get '/ajax/playlist' do
@@ -81,9 +82,10 @@ class MPDQueue < Sinatra::Base
   notify = lambda {|event| io.push(event, nil) if io_ready }
 
   mpd = MPD.new($config[:mpd_host], $config[:mpd_port], callbacks: true)
-  mpd.on(:state)    { notify.call(:state) }
+  mpd.on(:state)    { notify.call(:current) }
   mpd.on(:song)     { notify.call(:current) }
   mpd.on(:playlist) { notify.call(:playlist) }
+  mpd.on(:random)   { notify.call(:current) }
   mpd.connect
   unless mpd.connected?
     STDERR puts 'Error connecting to mpd'

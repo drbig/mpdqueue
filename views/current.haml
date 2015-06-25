@@ -6,5 +6,11 @@
           = "#{song.artist} - #{song.title}"
         - else
           = File.basename(song.file)
+      %td.text-right
+        - case mode
+        - when :normal
+          %span.glyphicon.glyphicon-play{'aria-hidden' => 'true'}
+        - when :random
+          %span.glyphicon.glyphicon-random{'aria-hidden' => 'true'}
 - else
   Radio is silent.

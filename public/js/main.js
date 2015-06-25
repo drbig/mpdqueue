@@ -7,10 +7,6 @@ $(function() {
 
   var io = new RocketIO().connect();
 
-  io.on('state', function(data) {
-    $current.load('/ajax/current');
-  });
-
   io.on('current', function(data) {
     $current.load('/ajax/current');
   });
