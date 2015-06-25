@@ -1,0 +1,33 @@
+- if playlist.any?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th #
+        %th Artist
+        %th Album
+        %th Title
+        %th.text-right Length
+    %tbody
+      - total = 0
+      - playlist.each_with_index do |song, i|
+        - total += song.time
+        %tr
+          %td= i+1
+          %td= song.artist
+          %td= song.album
+          %td
+            - if song.title
+              = song.title
+            - else
+              = File.basename(song.file)
+          %td.text-right= time_to_str(song.time)
+      - if total > 0
+        %tr
+          %td
+          %td
+          %td
+          %td
+          %td.text-right
+            %b= time_to_str(total)
+- else
+  Empty.

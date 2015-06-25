@@ -1,0 +1,10 @@
+- if song
+  %table.table{width: '100%'}
+    %tr
+      %td
+        - if song.title
+          = "#{song.artist} - #{song.title}"
+        - else
+          = File.basename(song.file)
+- else
+  Radio is silent.
