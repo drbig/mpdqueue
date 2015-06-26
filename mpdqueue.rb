@@ -62,8 +62,9 @@ class MPDQueue < Sinatra::Base
 
   get '/ajax/current' do
     song = mpd.playing? ? mpd.current_song : nil
+    elapsed = song ? mpd.status[:time].first : 0
     mode = mpd.random? ? :random : :normal
-    haml :current, partial: true, locals: {song: song, mode: mode}
+    haml :current, partial: true, locals: {song: song, elapsed: elapsed, mode: mode}
   end
 
   get '/ajax/playlist' do
