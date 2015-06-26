@@ -1,6 +1,12 @@
 - if song
   %table.table{width: '100%'}
     %tr
+      %td
+        - case mode
+        - when :normal
+          %span.glyphicon.glyphicon-play{'aria-hidden' => 'true'}
+        - when :random
+          %span.glyphicon.glyphicon-random{'aria-hidden' => 'true'}
       %td{width: '100%'}
         - if song.title
           = "#{song.artist} - #{song.title}"
@@ -8,12 +14,6 @@
           = File.basename(song.file)
       %td.text-right
         %span#timer= time_to_str(song.time)
-      %td.text-right
-        - case mode
-        - when :normal
-          %span.glyphicon.glyphicon-play{'aria-hidden' => 'true'}
-        - when :random
-          %span.glyphicon.glyphicon-random{'aria-hidden' => 'true'}
   .progress
     #progressbar.progress-bar{style: 'transition: none;'} &nbsp;
   %script{type: 'text/javascript'}= "playBar(true, #{elapsed}, #{song.time});"
