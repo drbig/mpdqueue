@@ -9,3 +9,4 @@
 :contact: mailto:your@mail.address
 :stream_playlist: http://link.to/playlist.m3u
 :stream_direct: http://direct.stream/url
+:stream_widget: false # you need to set stream_direct above for this to work

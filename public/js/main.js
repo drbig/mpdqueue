@@ -1,4 +1,5 @@
 var $current = $('#current');
+var $player = $('#player');
 var $playlist = $('#playlist');
 
 var timer, song_len, song_current;
@@ -30,6 +31,13 @@ function playBar(state, elapsed, time) {
   updateBar();
 };
 
+function reloadPlayer() {
+  $player.load();
+};
+
+if ($player.length > 0) {
+  $player[0].autoplay = false;
+}
 $current.load('/ajax/current');
 $playlist.load('/ajax/playlist');
 

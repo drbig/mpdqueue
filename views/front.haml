@@ -27,6 +27,18 @@
       Currently playing:
       #current{style: 'font-size: 200%;'}
       %hr
+      - if config [:stream_widget]
+        Play directly in browser:
+        %table
+          %tr
+            %td
+              %button.btn.btn-default{onclick: 'reloadPlayer()'}
+                %span.glyphicon.glyphicon-refresh{'aria-hidden' => 'true'}
+            %td
+              %audio#player{preload: 'none', autoplay: :false, controls: true}
+                %source{src: config[:stream_direct], type: 'audio/ogg'}
+                Your browser doesn't support HTML5 audio.
+        %hr
       Playlist:
       #playlist
       %hr
