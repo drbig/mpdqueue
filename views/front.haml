@@ -23,7 +23,14 @@
         &nbsp;
         - if config[:contact]
           %a{href: config[:contact]} Contact
+        &nbsp;
+        - if config[:info_title]
+          %a{onclick: 'toggleInfo()'}= config[:info_title]
       %hr
+      - if config[:info_text]
+        #info{style: 'display: none; width: 100%;'}
+          != config[:info_text]
+          %hr
       Currently playing:
       #current{style: 'font-size: 200%;'}
       %hr

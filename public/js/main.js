@@ -1,3 +1,4 @@
+var $info = $('#info');
 var $current = $('#current');
 var $player = $('#player');
 var $playlist = $('#playlist');
@@ -34,6 +35,10 @@ function playBar(state, elapsed, time) {
 function reloadPlayer() {
   $player.load();
 };
+
+function toggleInfo() {
+  $info.toggle('slow');
+}
 
 if ($player.length > 0) {
   $player[0].autoplay = false;

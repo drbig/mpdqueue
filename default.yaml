@@ -10,3 +10,5 @@
 :stream_playlist: http://link.to/playlist.m3u
 :stream_direct: http://direct.stream/url
 :stream_widget: false # you need to set stream_direct above for this to work
+:info_title: Help
+:info_text: Some text # you need to set info_title above too for this to work
