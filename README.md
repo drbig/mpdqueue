@@ -4,6 +4,17 @@ Super-simple live-updating "player frontend" webapp for MPD.
 
 ![MPDQueue in action](http://i.imgur.com/XL3D5nz.png)
 
+Features:
+
+ - Currently playing with progress bar and a timer
+ - Indicator for normal and random playback
+ - Playlist
+ - Auto-updating on change
+ - HTML5 widget for in-browser playback
+ - Additional info box
+ - Easily configurable
+ - Looks good
+
 ## Setup
 
 ```bash
@@ -33,6 +44,9 @@ Configuration options:
 :contact: mailto:your@mail.address
 :stream_playlist: http://link.to/playlist.m3u
 :stream_direct: http://direct.stream/url
+:stream_widget: false # you need to set stream_direct above for this to work
+:info_title: Help
+:info_text: Some text # you need to set info_title above too for this to work
 ```
 
 ## Contributing
