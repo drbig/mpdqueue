@@ -17,15 +17,13 @@
       %p
         - if config[:stream_direct]
           - if config[:stream_direct].is_a? Array
-            Streams:
-            = config[:stream_direct].map.with_index{|l,i| "<a href='#{l}'>#{i+1}</a>"}.join('&nbsp;')
+            = config[:stream_direct].map.with_index{|l,i| "<a href='#{l}'>Stream #{i+1}</a>"}.join('&nbsp;&nbsp;')
           - else
             %a{href: config[:stream_direct]} Stream
           &nbsp;
         - if config[:stream_playlist]
           - if config[:stream_playlist].is_a? Array
-            Playlists:
-            = config[:stream_playlist].map.with_index{|l,i| "<a href='#{l}'>#{i+1}</a>"}.join('&nbsp;')
+            = config[:stream_playlist].map.with_index{|l,i| "<a href='#{l}'>Playlist #{i+1}</a>"}.join('&nbsp;&nbsp;')
           - else
             %a{href: config[:stream_playlist]} Playlist
           &nbsp;
