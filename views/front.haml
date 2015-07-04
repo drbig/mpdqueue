@@ -16,14 +16,22 @@
       .h1= "#{config[:title]}"
       %p
         - if config[:stream_playlist]
-          %a{href: config[:stream_playlist]} Playlist
-        &nbsp;
+          - if config[:stream_playlist].is_a? Array
+            Playlists:
+            = config[:stream_playlist].map.with_index{|l,i| "<a href='#{l}'>#{i+1}</a>"}.join('&nbsp;')
+          - else
+            %a{href: config[:stream_playlist]} Playlist
+          &nbsp;
         - if config[:stream_direct]
-          %a{href: config[:stream_direct]} Stream
-        &nbsp;
+          - if config[:stream_direct].is_a? Array
+            Streams:
+            = config[:stream_direct].map.with_index{|l,i| "<a href='#{l}'>#{i+1}</a>"}.join('&nbsp;')
+          - else
+            %a{href: config[:stream_direct]} Stream
+          &nbsp;
         - if config[:contact]
           %a{href: config[:contact]} Contact
-        &nbsp;
+          &nbsp;
         - if config[:info_title]
           %a{onclick: 'toggleInfo()'}= config[:info_title]
       %hr
@@ -43,7 +51,8 @@
                 %span.glyphicon.glyphicon-refresh{'aria-hidden' => 'true'}
             %td
               %audio#player{preload: 'none', autoplay: :false, controls: true}
-                %source{src: config[:stream_direct], type: 'audio/ogg'}
+                - src = config[:stream_direct].is_a?(Array) ? config[:stream_direct].first : config[:stream_direct]
+                %source{src: src, type: 'audio/ogg'}
                 Your browser doesn't support HTML5 audio.
         %hr
       Playlist:
