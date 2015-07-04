@@ -5,10 +5,13 @@
 :title: My mpd queue
 :mpd_host: 127.0.0.1
 :mpd_port: 6600
+:version: false # set to string to display, with false it'll try use git --describe
 # options below are not mandatory, you can delete them
 :contact: mailto:your@mail.address
-:stream_playlist: http://link.to/playlist.m3u
-:stream_direct: http://direct.stream/url
-:stream_widget: false # you need to set stream_direct above for this to work
+:stream_playlist: http://link.to/playlist.m3u # can be an array
+:stream_direct: http://direct.stream/url # can be an array
+# for the following to work you need at least one stream_direct URL defined,
+# in case of an array it will use only the first entry
+:stream_widget: false
 :info_title: Help
 :info_text: Some text # you need to set info_title above too for this to work
