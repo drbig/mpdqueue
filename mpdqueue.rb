@@ -24,6 +24,7 @@ end
 
 begin
   $config = File.open(ARGV.first) {|f| YAML.load(f.read) }
+  $ver = $config[:version] || `git describe --tags --always --dirty`
 rescue StandardError => e
   STDERR.puts 'Error loading config file'
   STDERR.puts e.to_s
@@ -73,7 +74,7 @@ class MPDQueue < Sinatra::Base
   end
 
   get '/' do
-    haml :front, locals: {config: $config}
+    haml :front, locals: {config: $config, ver: $ver}
   end
 
   register Sinatra::RocketIO
