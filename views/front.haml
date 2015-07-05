@@ -50,7 +50,7 @@
             %td
               %audio#player{preload: 'none', autoplay: :false, controls: true}
                 - src = config[:stream_direct].is_a?(Array) ? config[:stream_direct].first : config[:stream_direct]
-                %source{src: src, type: 'audio/ogg'}
+                %source{src: src, type: config[:stream_format]}
                 Your browser doesn't support HTML5 audio.
         %hr
       Playlist:

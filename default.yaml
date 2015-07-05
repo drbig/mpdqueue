@@ -13,5 +13,6 @@
 # for the following to work you need at least one stream_direct URL defined,
 # in case of an array it will use only the first entry
 :stream_widget: false
+:stream_format: audio/ogg
 :info_title: Help
 :info_text: Some text # you need to set info_title above too for this to work
