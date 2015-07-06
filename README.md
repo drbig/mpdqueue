@@ -2,18 +2,21 @@
 
 Super-simple live-updating "player frontend" webapp for MPD.
 
-![MPDQueue in action](http://i.imgur.com/XL3D5nz.png)
-
 Features:
 
  - Currently playing with progress bar and a timer
  - Indicator for normal and random playback
- - Playlist
+ - Current playlist
  - Auto-updating on change
  - HTML5 widget for in-browser playback
  - Additional info box
+ - Support for multiple streams and/or playlist URLs
  - Easily configurable
  - Looks good
+
+*(screenshot presents minimal features)*
+
+![MPDQueue in action](http://i.imgur.com/XL3D5nz.png)
 
 ## Setup
 
@@ -22,7 +25,7 @@ $ git clone https://github.com/drbig/mpdqueue.git
 $ cd mpdqueue
 $ cp default.yaml my.yaml
 $ $EDITOR my.yaml
-$ bundle
+$ bundle install
 $ ./mpdqueue.rb my.yaml
 ```
 
