@@ -16,7 +16,7 @@
         %span#timer= time_to_str(song.time)
   .progress
     #progressbar.progress-bar{style: 'transition: none;'} &nbsp;
-  %script{type: 'text/javascript'}= "playBar(true, #{elapsed}, #{song.time});"
+  %script{type: 'text/javascript', defer: true} $(function(){playBar(true, #{elapsed}, #{song.time});});
 - else
   Radio is silent.
-  %script{type: 'text/javascript'} playBar(false, 0, 0);
+  %script{type: 'text/javascript', defer: true} $(function(){playBar(false, 0, 0);});

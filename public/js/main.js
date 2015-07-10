@@ -43,8 +43,6 @@ function toggleInfo() {
 if ($player.length > 0) {
   $player[0].autoplay = false;
 }
-$current.load('/ajax/current');
-$playlist.load('/ajax/playlist');
 
 var io = new RocketIO().connect();
 
