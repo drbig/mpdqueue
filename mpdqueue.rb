@@ -91,7 +91,7 @@ class MPDQueue < Sinatra::Base
   io = Sinatra::RocketIO
   io_ready = false
   io.once(:start) { io_ready = true }
-  notify = lambda {|event, data| io.push(event, data) if io_ready }
+  notify = lambda {|event, data = nil| io.push(event, data) if io_ready }
   if $config[:counter]
     io.on(:connect)     { $counter += 1; notify.call(:counter, $counter) }
     io.on(:disconnect)  { $counter -= 1; notify.call(:counter, $counter) }
