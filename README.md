@@ -54,6 +54,7 @@ Configuration options:
 :stream_format: audio/ogg
 :info_title: Help
 :info_text: Some text # you need to set info_title above too for this to work
+:counter: false # show online users counter
 ```
 
 ## Contributing
