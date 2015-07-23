@@ -2,6 +2,7 @@ var $info = $('#info');
 var $current = $('#current');
 var $player = $('#player');
 var $playlist = $('#playlist');
+var $counter = $('#counter');
 
 var timer, song_len, song_current;
 
@@ -53,3 +54,9 @@ io.on('current', function(data) {
 io.on('playlist', function(data) {
   $playlist.load('/ajax/playlist');
 });
+
+if ($counter.length > 0) {
+  io.on('counter', function(data) {
+    $counter.html(data).effect("highlight", 250);
+  });
+}

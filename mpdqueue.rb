@@ -31,6 +31,8 @@ rescue StandardError => e
   exit(2)
 end
 
+$counter = 0
+
 class MPDQueue < Sinatra::Base
   configure do
     enable :static
@@ -89,7 +91,11 @@ class MPDQueue < Sinatra::Base
   io = Sinatra::RocketIO
   io_ready = false
   io.once(:start) { io_ready = true }
-  notify = lambda {|event| io.push(event, nil) if io_ready }
+  notify = lambda {|event, data| io.push(event, data) if io_ready }
+  if $config[:counter]
+    io.on(:connect)     { $counter += 1; notify.call(:counter, $counter) }
+    io.on(:disconnect)  { $counter -= 1; notify.call(:counter, $counter) }
+  end
 
   mpd = MPD.new($config[:mpd_host], $config[:mpd_port], callbacks: true)
   mpd.on(:state)    { notify.call(:current) }
