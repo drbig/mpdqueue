@@ -1,10 +1,13 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 #
-# today's motto: as simple as possible
+# today was long time ago
 
+require 'open-uri'
+require 'uri'
 require 'yaml'
 
+require 'json'
 require 'sinatra/base'
 require 'sinatra/rocketio'
 require 'tilt/haml'
@@ -32,6 +35,36 @@ rescue StandardError => e
 end
 
 $counter = 0
+
+module AlbumArt
+  @@mtx = Mutex.new
+  @@last = [nil, nil]
+
+  def self.get(song)
+    term = "#{song.artist} #{song.title}"
+    @@mtx.synchronize do
+      if @@last.first != term
+        img = nil
+        begin
+          STDERR.puts "Fetching album art for #{term}..."
+          raw = open('https://itunes.apple.com/search?term=' \
+                     + URI.encode(term) + '&limit=1&entity=song').read
+          data = JSON.parse(raw)
+          if data['resultCount'] > 0
+            img = data['results'].first['artworkUrl100']
+            img = nil if img.nil? || img.empty?
+          end
+        rescue StandardError => e
+          STDERR.puts "AlbumArt.get crap: #{e.to_s}"
+          STDERR.puts e.backtrace.join("\n")
+        ensure
+          @@last = [term, img]
+        end
+      end
+      @@last[1]
+    end
+  end
+end
 
 class MPDQueue < Sinatra::Base
   configure do
@@ -64,9 +97,14 @@ class MPDQueue < Sinatra::Base
 
     def render_current
       song = mpd.playing? ? mpd.current_song : nil
-      elapsed = song ? mpd.status[:time].first : 0
+      album_art = nil
+      if $config[:album_art] && song
+        album_art = AlbumArt.get(song)
+      end
       mode = mpd.random? ? :random : :normal
-      haml :current, partial: true, locals: {song: song, elapsed: elapsed, mode: mode}
+      elapsed = song ? mpd.status[:time].first : 0
+      haml :current, partial: true, locals: {song: song, elapsed: elapsed, mode: mode,
+                                             album_art: album_art}
     end
 
     def render_playlist

@@ -1,6 +1,9 @@
 - if song
   %table.table{width: '100%'}
     %tr
+      - if album_art
+        %td
+          %img{src: album_art, alt: 'Album cover'}
       %td
         - case mode
         - when :normal
