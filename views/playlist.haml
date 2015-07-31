@@ -11,7 +11,8 @@
       - total = 0
       - playlist.each_with_index do |song, i|
         - total += song.time
-        %tr
+        - css = song == current ? {class: 'highlight'} : {}
+        %tr{css}
           %td= i+1
           %td= song.artist
           %td= song.album
