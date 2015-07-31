@@ -46,7 +46,6 @@ module AlbumArt
       if @@last.first != term
         img = nil
         begin
-          STDERR.puts "Fetching album art for #{term}..."
           raw = open('https://itunes.apple.com/search?term=' \
                      + URI.encode(term) + '&limit=1&entity=song').read
           data = JSON.parse(raw)
@@ -55,7 +54,7 @@ module AlbumArt
             img = nil if img.nil? || img.empty?
           end
         rescue StandardError => e
-          STDERR.puts "AlbumArt.get crap: #{e.to_s}"
+          STDERR.puts "Error finding album art: #{e.to_s}"
           STDERR.puts e.backtrace.join("\n")
         ensure
           @@last = [term, img]
@@ -97,11 +96,8 @@ class MPDQueue < Sinatra::Base
 
     def render_current
       song = mpd.playing? ? mpd.current_song : nil
-      album_art = nil
-      if $config[:album_art] && song
-        album_art = AlbumArt.get(song)
-      end
       mode = mpd.random? ? :random : :normal
+      album_art = $config[:album_art] && song ? AlbumArt.get(song) : nil
       elapsed = song ? mpd.status[:time].first : 0
       haml :current, partial: true, locals: {song: song, elapsed: elapsed, mode: mode,
                                              album_art: album_art}
