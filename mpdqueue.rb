@@ -94,6 +94,11 @@ class MPDQueue < Sinatra::Base
       end
     end
 
+    def shop_link(song)
+      return nil unless $config[:shop_link]
+      $config[:shop_link] % [URI.encode("#{song.artist} #{song.album}")]
+    end
+
     def render_current
       song = mpd.playing? ? mpd.current_song : nil
       mode = mpd.random? ? :random : :normal

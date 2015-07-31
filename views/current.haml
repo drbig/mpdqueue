@@ -3,7 +3,11 @@
     %tr
       - if album_art
         %td
-          %img{src: album_art, alt: 'Album cover'}
+          - if link = shop_link(song)
+            %a{href: link, target: '_blank'}
+              %img{src: album_art, alt: 'Album cover'}
+          - else
+            %img{src: album_art, alt: 'Album cover'}
       %td
         - case mode
         - when :normal
