@@ -1,6 +1,6 @@
 # MPDQueue
 
-Super-simple live-updating "player frontend" webapp for MPD.
+~~Super-simple~~ Cool live-updating "player frontend" webapp for MPD.
 
 Features:
 
@@ -11,10 +11,14 @@ Features:
  - HTML5 widget for in-browser playback
  - Additional info box
  - Support for multiple streams and/or playlist URLs
+ - Online users counter
+ - Can search for and show album art
+ - Album art, if found, can be made into a "buy now" link
+ - Also makes sense when JavaScript is disabled in browser
  - Easily configurable
  - Looks good
 
-*(screenshot presents minimal features)*
+*Note*: Might not actually be cool. Screenshot presents minimal features.
 
 ![MPDQueue in action](http://i.imgur.com/XL3D5nz.png)
 
@@ -31,7 +35,7 @@ $ ./mpdqueue.rb my.yaml
 
 Dependencies:
  - Modern Ruby
- - Four GEMs
+ - Five GEMs
 
 Configuration options:
 
@@ -55,6 +59,11 @@ Configuration options:
 :info_title: Help
 :info_text: Some text # you need to set info_title above too for this to work
 :counter: false # show online users counter
+:album_art: false # try to fetch and show album art from iTunes
+ # generate a 'buy now' link, by substituting "artist album", so an example
+ # shop_link value: http://www.amazon.com/s/field-keywords=%s
+ # works only if album_art is enabled and album art has been found
+:shop_link: false
 ```
 
 ## Contributing
