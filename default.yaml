@@ -17,3 +17,8 @@
 :info_title: Help
 :info_text: Some text # you need to set info_title above too for this to work
 :counter: false # show online users counter
+:album_art: false # try to fetch and show album art from iTunes
+ # generate a 'buy now' link, by substituting "artist album", so an example
+ # shop_link value: http://www.amazon.com/s/field-keywords=%s
+ # works only if album_art is enabled and album art has been found
+:shop_link: false
