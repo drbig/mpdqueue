@@ -35,6 +35,13 @@ rescue StandardError => e
 end
 
 $counter = 0
+$cntMtx = Mutex.new
+def updateCounter(val)
+  $cntMtx.synchronize do
+    $counter += val
+    $counter = 0 if $counter < 0
+  end
+end
 
 module AlbumArt
   @@mtx = Mutex.new
@@ -132,8 +139,8 @@ class MPDQueue < Sinatra::Base
   io.once(:start) { io_ready = true }
   notify = lambda {|event, data = nil| io.push(event, data) if io_ready }
   if $config[:counter]
-    io.on(:connect)     { $counter += 1; notify.call(:counter, $counter) }
-    io.on(:disconnect)  { $counter -= 1; notify.call(:counter, $counter) }
+    io.on(:connect)     { updateCounter(1);  notify.call(:counter, $counter) }
+    io.on(:disconnect)  { updateCounter(-1); notify.call(:counter, $counter) }
   end
 
   mpd = MPD.new($config[:mpd_host], $config[:mpd_port], callbacks: true)
