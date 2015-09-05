@@ -93,12 +93,12 @@ class MPDQueue < Sinatra::Base
   helpers do
     def mpd; settings.mpd; end
 
-    def time_to_str(sec)
-      if sec > 3600
-        Time.at(sec).utc.strftime("%H:%M:%S")
-      else
-        Time.at(sec).utc.strftime("%M:%S")
-      end
+    def time_to_str(time)
+      min, sec = time.divmod(60)
+      hrs, min = min.divmod(60)
+      day, hrs = hrs.divmod(24)
+      str = day > 0 ? "#{day}d+" : ''
+      str += '%02d:%02d:%02d' % [hrs, min, sec]
     end
 
     def shop_link(song)
